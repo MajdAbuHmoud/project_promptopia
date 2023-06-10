@@ -3,7 +3,6 @@ import "@styles/globals.css";
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
 import { ReactNode } from "react";
-import { getSession } from "next-auth/react";
 import { Session } from "next-auth";
 
 export const metaData = {
