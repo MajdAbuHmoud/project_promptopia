@@ -74,19 +74,26 @@ function Nav() {
           </div>
         ) : null}
         {!session?.user && status === "unauthenticated" ? (
-          <>
+          <div className="flex gap-3 md:gap-5">
             {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  className="black_btn"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                >
-                  Sign In
-                </button>
-              ))}
-          </>
+              Object.values(providers)
+                .filter((provider) => provider.name !== "passage")
+                .map((provider) => (
+                  <button
+                    type="button"
+                    className="black_btn"
+                    key={provider.name}
+                    onClick={() => signIn(provider.id)}
+                  >
+                    Sign In {provider.name}
+                  </button>
+                ))}
+            <Link href="/signIn">
+              <button type="button" className="black_btn">
+                Sign In
+              </button>
+            </Link>
+          </div>
         ) : null}
       </div>
 
@@ -132,19 +139,26 @@ function Nav() {
             )}
           </div>
         ) : (
-          <>
+          <div className="flex gap-3 md:gap-5">
             {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  className="black_btn"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                >
-                  Sign In
-                </button>
-              ))}
-          </>
+              Object.values(providers)
+                .filter((provider) => provider.name !== "passage")
+                .map((provider) => (
+                  <button
+                    type="button"
+                    className="black_btn"
+                    key={provider.name}
+                    onClick={() => signIn(provider.id)}
+                  >
+                    Sign In {provider.name}
+                  </button>
+                ))}
+            <Link href="/signIn">
+              <button type="button" className="black_btn">
+                Sign In
+              </button>
+            </Link>
+          </div>
         )}
       </div>
     </nav>

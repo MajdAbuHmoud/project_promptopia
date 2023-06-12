@@ -1,6 +1,5 @@
 "use client";
 
-import { PassageElement } from "@passageidentity/passage-elements/*";
 import { useEffect } from "react";
 
 export default function SignIn() {
@@ -9,15 +8,9 @@ export default function SignIn() {
   useEffect(() => {
     require("@passageidentity/passage-elements/passage-auth");
 
-    const passageAuth = document?.querySelector(
-      "passage-auth"
-    ) as PassageElement;
-    if (passageAuth) {
-      passageAuth.beforeAuth = () => {
-        console.log("beforeAuth");
-        return true;
-      };
-    }
+    // const passageAuth = document?.querySelector(
+    //   "passage-auth"
+    // ) as PassageElement;
   }, []);
 
   return <passage-auth app-id={appID}></passage-auth>;

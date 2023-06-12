@@ -1,5 +1,7 @@
 // import Prompt from "@models/prompt";
+import User from "@models/user";
 import Passage from "@passageidentity/passage-node";
+import { connectToDB } from "@utils/database";
 // import { connectToDB } from "@utils/database";
 import { cookies } from "next/dist/client/components/headers";
 
@@ -21,9 +23,24 @@ export const GET = async () => {
     };
     const userID = await passage.authenticateRequest(req);
     if (userID) {
-      const { email, phone } = await passage.user.get(userID);
+      const { email, phone, user_metadata } = await passage.user.get(userID);
+      const { username } = user_metadata || ({} as any);
 
       const identifier = email ? email : phone;
+
+      await connectToDB();
+
+      const userExists = await User.findOne({ email: identifier });
+
+      if (!userExists) {
+        // Create user
+        await User.create({
+          email: email,
+          username: username?.replace(" ", "").toLowerCase(),
+          image: "",
+        });
+      }
+
       const result = {
         isAuthorized: true,
         username: identifier,
