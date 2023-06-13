@@ -1,20 +1,8 @@
 "use client";
 
 import Feed from "@components/Feed";
-import Passage from "@passageidentity/passage-node";
-import { useEffect } from "react";
-// import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 function Home() {
-  useEffect(() => {
-    const temp = async () => {
-      console.log("hello");
-      await getinfo();
-    };
-
-    console.log(temp());
-  }, []);
-
   return (
     <section className="w-full flex-center flex-col">
       <h1 className="head_text text-center">
@@ -30,13 +18,5 @@ function Home() {
     </section>
   );
 }
-
-export const getinfo = async () => {
-  const response = await fetch("/api/auth/passageAuth");
-  console.log("🚀 ~ file: page.tsx:36 ~ getinfo ~ response:", response);
-  const data = response.json();
-
-  return data;
-};
 
 export default Home;

@@ -10,9 +10,18 @@ import {
   useSession,
 } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { PassageUserType } from "@types";
 
 function Nav() {
   const { data: session, status } = useSession();
+  const [userInfo, setUserInfo] = useState<PassageUserType>({
+    _id: "",
+    username: "",
+    email: "",
+    image: "",
+    isAuthorized: false,
+  });
+  const [loading, setLoading] = useState(true);
 
   const [providers, setProviders] = useState<Record<
     string,
@@ -26,6 +35,13 @@ function Nav() {
       const response = await getProviders();
       setProviders(response);
     };
+    const getUserProfileInfo = async () => {
+      const getUserProfileInfoResponse = await fetch("/api/auth/passageAuth");
+      const data = await getUserProfileInfoResponse.json();
+      setUserInfo(data);
+      setLoading(false);
+    };
+    getUserProfileInfo();
     setProvidersData();
   }, []);
 
@@ -46,121 +62,128 @@ function Nav() {
         <p className="logo_text">Promptopia</p>
       </Link>
 
-      {/* Desktop Navigation */}
-      <div className="sm:flex hidden">
-        {session?.user && status === "authenticated" ? (
-          <div className="flex gap-3 md:gap-5">
-            <Link href="/create-prompt" className="black_btn">
-              Create Post
-            </Link>
-
-            <button
-              type="button"
-              className="outline_btn"
-              onClick={handleSignOut}
-            >
-              Sign Out
-            </button>
-
-            <Link href="/profile">
-              <Image
-                src={session.user.image || "/assets/images/logo.svg"}
-                alt="Profile"
-                width={37}
-                height={37}
-                className="rounded-full"
-              />
-            </Link>
-          </div>
-        ) : null}
-        {!session?.user && status === "unauthenticated" ? (
-          <div className="flex gap-3 md:gap-5">
-            {providers &&
-              Object.values(providers)
-                .filter((provider) => provider.name !== "passage")
-                .map((provider) => (
-                  <button
-                    type="button"
-                    className="black_btn"
-                    key={provider.name}
-                    onClick={() => signIn(provider.id)}
-                  >
-                    Sign In {provider.name}
-                  </button>
-                ))}
-            <Link href="/signIn">
-              <button type="button" className="black_btn">
-                Sign In
-              </button>
-            </Link>
-          </div>
-        ) : null}
-      </div>
-
-      {/* Mobile Navigation */}
-      <div className="sm:hidden flex relative">
-        {session?.user ? (
-          <div className="flex">
-            <Image
-              src={session.user.image || "/assets/images/logo.svg"}
-              alt="Profile"
-              width={37}
-              height={37}
-              className="rounded-full cursor-pointer"
-              onClick={() => setToggleDropdown((prev) => !prev)}
-            />
-            {toggleDropdown && (
-              <div className="dropdown">
-                <Link
-                  href="/profile"
-                  className="dropdown_link"
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  My Profile
+      {!loading ? (
+        <>
+          {/* Desktop Navigation */}
+          <div className="sm:flex hidden">
+            {(session?.user && status === "authenticated") ||
+            userInfo.isAuthorized ? (
+              <div className="flex gap-3 md:gap-5">
+                <Link href="/create-prompt" className="black_btn">
+                  Create Post
                 </Link>
-                <Link
-                  href="/create-prompt"
-                  className="dropdown_link"
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  Create Prompt
-                </Link>
+
                 <button
                   type="button"
-                  onClick={() => {
-                    setToggleDropdown(false);
-                    signOut();
-                  }}
-                  className="mt-5 w-full black_btn"
+                  className="outline_btn"
+                  onClick={handleSignOut}
                 >
                   Sign Out
                 </button>
+
+                <Link href="/profile">
+                  <Image
+                    src={
+                      session?.user?.image ||
+                      userInfo.image ||
+                      "/assets/images/logo.svg"
+                    }
+                    alt="Profile"
+                    width={37}
+                    height={37}
+                    className="rounded-full"
+                  />
+                </Link>
+              </div>
+            ) : null}
+            {!session?.user &&
+            status === "unauthenticated" &&
+            !userInfo.isAuthorized ? (
+              <div className="flex gap-3 md:gap-5">
+                {providers &&
+                  Object.values(providers).map((provider) => (
+                    <button
+                      type="button"
+                      className="black_btn"
+                      key={provider.name}
+                      onClick={() => signIn(provider.id)}
+                    >
+                      Sign In with {provider.name}
+                    </button>
+                  ))}
+                <Link href="/auth/passageAuth/signIn">
+                  <button type="button" className="black_btn">
+                    Sign In
+                  </button>
+                </Link>
+              </div>
+            ) : null}
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="sm:hidden flex relative">
+            {session?.user || userInfo.isAuthorized ? (
+              <div className="flex">
+                <Image
+                  src={session?.user?.image || "/assets/images/logo.svg"}
+                  alt="Profile"
+                  width={37}
+                  height={37}
+                  className="rounded-full cursor-pointer"
+                  onClick={() => setToggleDropdown((prev) => !prev)}
+                />
+                {toggleDropdown && (
+                  <div className="dropdown">
+                    <Link
+                      href="/profile"
+                      className="dropdown_link"
+                      onClick={() => setToggleDropdown(false)}
+                    >
+                      My Profile
+                    </Link>
+                    <Link
+                      href="/create-prompt"
+                      className="dropdown_link"
+                      onClick={() => setToggleDropdown(false)}
+                    >
+                      Create Prompt
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setToggleDropdown(false);
+                        signOut();
+                      }}
+                      className="mt-5 w-full black_btn"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex gap-3 md:gap-5">
+                {providers &&
+                  Object.values(providers).map((provider) => (
+                    <button
+                      type="button"
+                      className="black_btn"
+                      key={provider.name}
+                      onClick={() => signIn(provider.id)}
+                    >
+                      Sign In with {provider.name}
+                    </button>
+                  ))}
+                <Link href="/auth/passageAuth/signIn">
+                  <button type="button" className="black_btn">
+                    Sign In
+                  </button>
+                </Link>
               </div>
             )}
           </div>
-        ) : (
-          <div className="flex gap-3 md:gap-5">
-            {providers &&
-              Object.values(providers)
-                .filter((provider) => provider.name !== "passage")
-                .map((provider) => (
-                  <button
-                    type="button"
-                    className="black_btn"
-                    key={provider.name}
-                    onClick={() => signIn(provider.id)}
-                  >
-                    Sign In {provider.name}
-                  </button>
-                ))}
-            <Link href="/signIn">
-              <button type="button" className="black_btn">
-                Sign In
-              </button>
-            </Link>
-          </div>
-        )}
-      </div>
+        </>
+      ) : null}
     </nav>
   );
 }

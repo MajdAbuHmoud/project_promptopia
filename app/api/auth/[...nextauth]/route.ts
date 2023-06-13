@@ -1,5 +1,6 @@
 import { ProfileModified } from "@interfaces/interfaces";
 import User from "@models/user";
+import { UserType } from "@types";
 import { connectToDB } from "@utils/database";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
@@ -13,6 +14,7 @@ const handler = NextAuth({
   ],
   callbacks: {
     async session({ session }) {
+      console.log("🚀 ~ file: route.ts:33 ~ session ~ session:", session);
       if (session.user) {
         const sessionUser = await User.findOne({ email: session.user.email });
 
