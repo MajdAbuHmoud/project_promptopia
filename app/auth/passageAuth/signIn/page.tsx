@@ -27,5 +27,7 @@ export default function SignIn() {
     // ) as PassageElement;
   }, []);
 
-  return <passage-auth app-id={passageAuthEnvValues.appID}></passage-auth>;
+  return passageAuthEnvValues.appID ? (
+    <passage-auth app-id={passageAuthEnvValues.appID}></passage-auth>
+  ) : null;
 }
