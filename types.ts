@@ -39,3 +39,8 @@ export type RequestCookieModified = RequestCookie & {
   image: string;
   email: string;
 };
+
+export type PassageAuthEnvValuesType = {
+  appID?: string;
+  apiKey?: string;
+};
