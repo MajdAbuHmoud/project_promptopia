@@ -16,27 +16,42 @@ import { motion } from "framer-motion";
 //   duration: 1,
 // }}
 
-const test = tw`text-6xl`;
+const test = tw`text-7xl`;
+const test2 = tw`text-5xl`;
 
 console.log("🚀 ~ file: page.tsx:21 ~ test:", test);
 
-// const fontSizeVariants = {
-//   initial: { test },
-//   final: {
-//     test2,
-//     transition: {
-//       delay: 5,
-//       duration: 1,
-//     },
-//   },
-// };
+const positionVariants = {
+  initial: {
+    top: "50%",
+    y: "-50%",
+  },
+  final: {
+    top: 0,
+    y: 0,
+    transition: {
+      delay: 5,
+      duration: 1,
+      ease: "easeInOut",
+    },
+  },
+};
 
-const parentOpacityVariants = {
+const parentVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
     transition: {
       staggerChildren: 1,
+    },
+  },
+  fontInitial: { fontSize: test.fontSize as string },
+  fontFinal: {
+    fontSize: test2.fontSize as string,
+    transition: {
+      delay: 5,
+      duration: 1,
+      ease: "easeInOut",
     },
   },
 };
@@ -56,12 +71,20 @@ const opacityVariants = {
 function Home() {
   return (
     <section className="w-full flex-center flex-col">
-      <div className="flex justify-center w-full h-screen relative">
-        <motion.div className="flex flex-col text-center absolute top-1/2 transform -translate-y-1/2">
+      <motion.div
+        initial={{ height: "100vh" }}
+        className="flex justify-center w-full relative"
+      >
+        <motion.div
+          variants={positionVariants}
+          initial="initial"
+          animate="final"
+          className="flex flex-col text-center absolute"
+        >
           <motion.div
-            variants={parentOpacityVariants}
-            initial="hidden"
-            animate="show"
+            variants={parentVariants}
+            initial={["hidden", "fontInitial"]}
+            animate={["show", "fontFinal"]}
             className="flex head_text flex-wrap justify-center space-x-3"
           >
             <motion.h1 variants={opacityVariants}>Discover</motion.h1>
@@ -69,13 +92,13 @@ function Home() {
             <motion.h1 variants={opacityVariants}>Share</motion.h1>
             <motion.span
               variants={opacityVariants}
-              className="w-full block mt-3 purple_gradient text-center"
+              className="w-full block mt-2 purple_gradient text-center"
             >
               AI-Powered Prompts
             </motion.span>
           </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* <p className="desc text-center">
         Promptopia is an open-source AI prompting tool for modern world to

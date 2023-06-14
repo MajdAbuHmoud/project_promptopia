@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@passageidentity/passage-elements": "latest",
     "@passageidentity/passage-node": "^2.3.0",
     "@types/node": "20.1.7",
@@ -32,6 +34,7 @@
   "devDependencies": {
     "@emotion/babel-plugin": "^11.11.0",
     "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-twin": "^1.1.0",
     "twin.macro": "^3.3.1"
   },
   "babelMacros": {
