@@ -1,13 +1,15 @@
 "use client";
 
+import { useMediaQuery } from "@utils/hooks/useMediaQuery";
+import { useResizeOnce } from "@utils/hooks/useResizeOnce";
 // import Feed from "@components/Feed";
 import { motion } from "framer-motion";
-// import tw from "twin.macro";
+import { useEffect, useState } from "react";
 
 const positionVariants = {
   initial: {
-    top: "50%",
-    y: "-50%",
+    top: "40%",
+    y: "-40%",
   },
   final: {
     top: 0,
@@ -20,29 +22,28 @@ const positionVariants = {
   },
 };
 
-// const test = tw`text-6xl`;
-// const test2 = tw`text-5xl`;
-// console.log("🚀 ~ file: page.tsx:66 ~ test:", test);
+const parentVariants = (hasResized: boolean, isMedium: boolean) => {
+  console.log("🚀 ~ file: page.tsx:25 ~ parentVariants ~ isMedium:", isMedium);
 
-const parentVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 1,
+  return {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 1,
+      },
     },
-  },
+    fontInitial: isMedium ? { fontSize: "5rem" } : { fontSize: "3rem" },
+    fontFinal: {
+      fontSize: isMedium ? "3rem" : "2rem",
+      transition: {
+        delay: hasResized ? 0 : 5,
+        duration: 1,
+        ease: "easeInOut",
+      },
+    },
+  };
 };
-
-// fontInitial: { fontSize: test.fontSize as string },
-// fontFinal: {
-//   fontSize: test2.fontSize as string,
-//   transition: {
-//     delay: 5,
-//     duration: 1,
-//     ease: "easeInOut",
-//   },
-// },
 
 const opacityVariants = {
   hidden: {
@@ -56,11 +57,16 @@ const opacityVariants = {
   },
 };
 
-// initial={["hidden", "fontInitial"]}
-// animate={["show", "fontFinal"]}
-
 function Home() {
-  return (
+  const hasResized = useResizeOnce();
+  const [isMounted, setIsMounted] = useState(false);
+  const isMedium = useMediaQuery("(min-width: 768px)");
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  return isMounted ? (
     <section className="w-full flex-center flex-col">
       <motion.div
         initial={{ height: "100vh" }}
@@ -73,10 +79,10 @@ function Home() {
           className="flex flex-col text-center absolute"
         >
           <motion.div
-            variants={parentVariants}
-            initial={"hidden"}
-            animate={"show"}
-            className="flex head_text flex-wrap justify-center space-x-3"
+            variants={parentVariants(hasResized, isMedium)}
+            initial={["hidden", "fontInitial"]}
+            animate={["show", "fontFinal"]}
+            className="flex font-extrabold leading-[1.15] text-black flex-wrap justify-center space-x-3"
           >
             <motion.h1 variants={opacityVariants}>Discover</motion.h1>
             <motion.h1 variants={opacityVariants}>&</motion.h1>
@@ -97,7 +103,7 @@ function Home() {
       </p> */}
       {/* <Feed /> */}
     </section>
-  );
+  ) : null;
 }
 
 export default Home;
