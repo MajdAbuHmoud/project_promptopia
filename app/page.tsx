@@ -1,25 +1,8 @@
 "use client";
 
-import Feed from "@components/Feed";
-import tw from "twin.macro";
+// import Feed from "@components/Feed";
 import { motion } from "framer-motion";
-
-// initial={{
-//   top: "50%",
-//   y: "-50%",
-// }}
-// animate={{
-//   top: 0,
-//   y: 0,
-// }}
-// transition={{
-//   duration: 1,
-// }}
-
-const test = tw`text-7xl`;
-const test2 = tw`text-5xl`;
-
-console.log("🚀 ~ file: page.tsx:21 ~ test:", test);
+import tw from "twin.macro";
 
 const positionVariants = {
   initial: {
@@ -36,6 +19,10 @@ const positionVariants = {
     },
   },
 };
+
+const test = tw`text-6xl`;
+const test2 = tw`text-5xl`;
+console.log("🚀 ~ file: page.tsx:66 ~ test:", test);
 
 const parentVariants = {
   hidden: { opacity: 0 },

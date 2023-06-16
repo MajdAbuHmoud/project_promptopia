@@ -17,4 +17,8 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withTwin(nextConfig);
+
+// module.exports = withTwin({
+//   reactStrictMode: true,
+// });
