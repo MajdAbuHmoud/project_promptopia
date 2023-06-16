@@ -1,5 +1,6 @@
 "use client";
 
+import { opacityVariants } from "@utils/framerMotion/variants";
 import { useMediaQuery } from "@utils/hooks/useMediaQuery";
 import { useResizeOnce } from "@utils/hooks/useResizeOnce";
 // import Feed from "@components/Feed";
@@ -43,18 +44,6 @@ const parentVariants = (hasResized: boolean, isMedium: boolean) => {
       },
     },
   };
-};
-
-const opacityVariants = {
-  hidden: {
-    opacity: 0,
-  },
-  show: {
-    opacity: 1,
-    transition: {
-      duration: 1,
-    },
-  },
 };
 
 function Home() {
