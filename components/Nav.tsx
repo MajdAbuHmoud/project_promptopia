@@ -38,6 +38,7 @@ function Nav() {
     const getUserProfileInfo = async () => {
       const getUserProfileInfoResponse = await fetch("/api/auth/passageAuth");
       const data = await getUserProfileInfoResponse.json();
+      console.log("🚀 ~ file: Nav.tsx:41 ~ getUserProfileInfo ~ data:", data);
       setUserInfo(data);
       setLoading(false);
     };

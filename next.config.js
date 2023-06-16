@@ -1,6 +1,6 @@
-const withTwin = require("./withTwin.js");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   experimental: {
     appDir: true,
     serverComponentsExternalPackages: ["mongoose"],
@@ -17,8 +17,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withTwin(nextConfig);
-
-// module.exports = withTwin({
-//   reactStrictMode: true,
-// });
+module.exports = nextConfig;

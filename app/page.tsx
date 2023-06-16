@@ -2,7 +2,7 @@
 
 // import Feed from "@components/Feed";
 import { motion } from "framer-motion";
-import tw from "twin.macro";
+// import tw from "twin.macro";
 
 const positionVariants = {
   initial: {
@@ -20,9 +20,9 @@ const positionVariants = {
   },
 };
 
-const test = tw`text-6xl`;
-const test2 = tw`text-5xl`;
-console.log("🚀 ~ file: page.tsx:66 ~ test:", test);
+// const test = tw`text-6xl`;
+// const test2 = tw`text-5xl`;
+// console.log("🚀 ~ file: page.tsx:66 ~ test:", test);
 
 const parentVariants = {
   hidden: { opacity: 0 },
@@ -32,16 +32,17 @@ const parentVariants = {
       staggerChildren: 1,
     },
   },
-  fontInitial: { fontSize: test.fontSize as string },
-  fontFinal: {
-    fontSize: test2.fontSize as string,
-    transition: {
-      delay: 5,
-      duration: 1,
-      ease: "easeInOut",
-    },
-  },
 };
+
+// fontInitial: { fontSize: test.fontSize as string },
+// fontFinal: {
+//   fontSize: test2.fontSize as string,
+//   transition: {
+//     delay: 5,
+//     duration: 1,
+//     ease: "easeInOut",
+//   },
+// },
 
 const opacityVariants = {
   hidden: {
@@ -54,6 +55,9 @@ const opacityVariants = {
     },
   },
 };
+
+// initial={["hidden", "fontInitial"]}
+// animate={["show", "fontFinal"]}
 
 function Home() {
   return (
@@ -70,8 +74,8 @@ function Home() {
         >
           <motion.div
             variants={parentVariants}
-            initial={["hidden", "fontInitial"]}
-            animate={["show", "fontFinal"]}
+            initial={"hidden"}
+            animate={"show"}
             className="flex head_text flex-wrap justify-center space-x-3"
           >
             <motion.h1 variants={opacityVariants}>Discover</motion.h1>
