@@ -11,6 +11,16 @@ export const navOpacityVariants = {
   },
 };
 
+export const parentOpacityVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.8,
+    },
+  },
+};
+
 export const opacityVariants = {
   hidden: {
     opacity: 0,
@@ -44,5 +54,20 @@ export const introTextLetterVariants = {
   show: {
     opacity: 1,
     y: 0,
+  },
+};
+
+export const searchTextVariants = {
+  hidden: {
+    opacity: 0,
+    y: 70,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 4.5,
+      duration: 0.7,
+    },
   },
 };

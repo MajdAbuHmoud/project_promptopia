@@ -1,3 +1,4 @@
+import { PostWithCreatorType } from "@types";
 import PromptCard from "./PromptCard";
 
 type ProfileProps = {

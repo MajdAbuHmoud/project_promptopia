@@ -1,5 +1,6 @@
 "use client";
 
+import { PostWithCreatorType, UserType } from "@types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";

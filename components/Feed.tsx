@@ -2,12 +2,20 @@
 
 import { useEffect, useState } from "react";
 import PromptCard from "./PromptCard";
+import { PostWithCreatorType } from "@types";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  opacityVariants,
+  parentOpacityVariants,
+  searchTextVariants,
+} from "@utils/framerMotion/variants";
 
 function Feed() {
   // Search bar
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState<PostWithCreatorType[]>([]);
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
+  const [displayPosts, setDisplayPosts] = useState<boolean>(false);
 
   const [posts, setPosts] = useState<PostWithCreatorType[]>([]);
 
@@ -64,7 +72,13 @@ function Feed() {
 
   return (
     <section className="feed">
-      <form className="relative w-full max-w-xl flex-center">
+      <motion.form
+        variants={searchTextVariants}
+        initial="hidden"
+        animate="show"
+        className="relative w-full max-w-xl flex-center"
+        onAnimationComplete={() => setDisplayPosts(true)}
+      >
         <input
           className="search_input peer"
           placeholder="Search for a tag or username"
@@ -72,18 +86,29 @@ function Feed() {
           value={searchText}
           onChange={(e) => handleSearchTextChange(e.target.value)}
         />
-      </form>
-      <div className="mt-16 prompt_layout">
-        {(searchText ? searchResults : posts).map((post) => {
-          return (
-            <PromptCard
-              key={post._id}
-              post={post}
-              handleTagClick={handleTagClick}
-            />
-          );
-        })}
-      </div>
+      </motion.form>
+      <AnimatePresence>
+        {posts.length && displayPosts ? (
+          <motion.div
+            variants={parentOpacityVariants}
+            initial="hidden"
+            animate="show"
+            className="mt-16 prompt_layout"
+          >
+            {(searchText ? searchResults : posts).map((post) => {
+              return (
+                <motion.div variants={opacityVariants} key={post._id}>
+                  <PromptCard
+                    key={post._id}
+                    post={post}
+                    handleTagClick={handleTagClick}
+                  />
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }

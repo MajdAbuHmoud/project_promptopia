@@ -16,18 +16,18 @@ export type PassageUserType = {
   isAuthorized: boolean;
 };
 
-type PromptType = {
+export type PromptType = {
   userId: string;
   prompt: string;
   tag: string;
 };
 
-type Post = {
+export type Post = {
   prompt: string;
   tag: string;
 };
 
-type PostWithCreatorType = {
+export type PostWithCreatorType = {
   _id: string;
   creator: UserType;
   prompt: string;
