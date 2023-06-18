@@ -1,5 +1,10 @@
 import { PostWithCreatorType } from "@types";
 import PromptCard from "./PromptCard";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  parentOpacityVariants,
+  postsVariants,
+} from "@utils/framerMotion/variants";
 
 type ProfileProps = {
   name: string;
@@ -24,19 +29,30 @@ function Profile({
         <span className="purple_gradient">{name} Profile</span>
       </h1>
       <p className="desc text-left">{desc}</p>
-      <div className="prompt_layout">
-        {posts.map((post) => {
-          return (
-            <PromptCard
-              key={post._id}
-              post={post}
-              handleEditClick={handleEditClick}
-              handleDeleteClick={handleDeleteClick}
-              handleTagClick={handleTagClick}
-            />
-          );
-        })}
-      </div>
+      <AnimatePresence>
+        {posts.length ? (
+          <motion.div
+            variants={parentOpacityVariants}
+            initial="hidden"
+            animate="show"
+            className="mt-16 prompt_layout"
+          >
+            {posts.map((post) => {
+              return (
+                <motion.div variants={postsVariants} key={post._id}>
+                  <PromptCard
+                    key={post._id}
+                    post={post}
+                    handleEditClick={handleEditClick}
+                    handleDeleteClick={handleDeleteClick}
+                    handleTagClick={handleTagClick}
+                  />
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }

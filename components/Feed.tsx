@@ -5,7 +5,6 @@ import PromptCard from "./PromptCard";
 import { PostWithCreatorType } from "@types";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  opacityVariants,
   parentOpacityVariants,
   postsVariants,
   searchTextVariants,

@@ -1,6 +1,7 @@
 "use client";
 
 import Form from "@components/Form";
+import { UserType } from "@types";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";

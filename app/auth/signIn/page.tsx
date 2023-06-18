@@ -1,9 +1,16 @@
 "use client";
 
 import { PassageAuthEnvValuesType } from "@types";
+import { data } from "autoprefixer";
 import { motion } from "framer-motion";
-import { ClientSafeProvider, getProviders, signIn } from "next-auth/react";
+import {
+  ClientSafeProvider,
+  getProviders,
+  signIn,
+  useSession,
+} from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function SignIn() {
@@ -19,7 +26,18 @@ export default function SignIn() {
     passageAuthEnvValues
   );
 
+  const router = useRouter();
+
+  const { data: session, status } = useSession();
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  if (status === "authenticated") {
+    router.push("/");
+  }
+
   useEffect(() => {
+    setIsMounted(true);
     require("@passageidentity/passage-elements/passage-auth");
 
     const fetechEnvValues = async () => {
@@ -40,7 +58,7 @@ export default function SignIn() {
     // ) as PassageElement;
   }, []);
 
-  return (
+  return isMounted && status === "unauthenticated" ? (
     <motion.div>
       <div className="flex flex-col align-center gap-3 md:gap-5">
         {providers &&
@@ -59,5 +77,5 @@ export default function SignIn() {
         <passage-auth app-id={passageAuthEnvValues.appID}></passage-auth>
       ) : null}
     </motion.div>
-  );
+  ) : null;
 }

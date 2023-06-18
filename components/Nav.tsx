@@ -70,11 +70,6 @@ function Nav() {
         variants={opacityVariants}
         className="sm:flex hidden"
       >
-        <Link href="/auth/signIn">
-          <button type="button" className="black_btn">
-            Sign In
-          </button>
-        </Link>
         {(session?.user && status === "authenticated") ||
         userInfo.isAuthorized ? (
           <div className="flex gap-3 md:gap-5">
@@ -105,28 +100,15 @@ function Nav() {
             </Link>
           </div>
         ) : null}
-        {/* {!session?.user &&
+        {!session?.user &&
         status === "unauthenticated" &&
         !userInfo.isAuthorized ? (
-          <div className="flex gap-3 md:gap-5">
-            {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  className="black_btn"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                >
-                  Sign In with {provider.name}
-                </button>
-              ))}
-            <Link href="/auth/passageAuth/signIn">
-              <button type="button" className="black_btn">
-                Sign In
-              </button>
-            </Link>
-          </div>
-        ) : null} */}
+          <Link href="/auth/signIn">
+            <button type="button" className="black_btn">
+              Sign In
+            </button>
+          </Link>
+        ) : null}
       </motion.div>
 
       {/* Mobile Navigation */}
@@ -176,22 +158,11 @@ function Nav() {
           </div>
         ) : (
           <div className="flex gap-3 md:gap-5">
-            {/* {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  className="black_btn"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                >
-                  Sign In with {provider.name}
-                </button>
-              ))}
-            <Link href="/auth/passageAuth/signIn">
+            <Link href="/auth/signIn">
               <button type="button" className="black_btn">
                 Sign In
               </button>
-            </Link> */}
+            </Link>
           </div>
         )}
       </motion.div>

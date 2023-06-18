@@ -46,6 +46,8 @@ const parentVariants = (hasResized: boolean, isMedium: boolean) => {
 };
 
 function Home() {
+  console.log("🚀 ~ file: page.tsx:49 ~ Home ~ Home:", Home);
+
   const hasResized = useResizeOnce();
   const [isMounted, setIsMounted] = useState(false);
   const isMedium = useMediaQuery("(min-width: 768px)");
