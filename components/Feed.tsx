@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   opacityVariants,
   parentOpacityVariants,
+  postsVariants,
   searchTextVariants,
 } from "@utils/framerMotion/variants";
 
@@ -97,7 +98,7 @@ function Feed() {
           >
             {(searchText ? searchResults : posts).map((post) => {
               return (
-                <motion.div variants={opacityVariants} key={post._id}>
+                <motion.div variants={postsVariants} key={post._id}>
                   <PromptCard
                     key={post._id}
                     post={post}
