@@ -2,33 +2,41 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ClientSafeProvider,
-  getProviders,
-  signIn,
-  signOut,
-  useSession,
-} from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { PassageUserType } from "@types";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   navOpacityVariants,
   opacityVariants,
 } from "@utils/framerMotion/variants";
+import { useRouter } from "next/navigation";
+
+const emptyUser = {
+  _id: "",
+  username: "",
+  email: "",
+  image: "",
+  isAuthorized: false,
+};
 
 function Nav() {
   const { data: session, status } = useSession();
-  const [userInfo, setUserInfo] = useState<PassageUserType>({
-    _id: "",
-    username: "",
-    email: "",
-    image: "",
-    isAuthorized: false,
-  });
+  const [userInfo, setUserInfo] = useState<PassageUserType>(emptyUser);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const [toggleDropdown, setToggleDropdown] = useState(false);
+
+  const passageSignOut = async () => {
+    const signOutResponse = await fetch("/api/auth/passageAuth/signOut");
+    const data = await signOutResponse.json();
+    console.log("🚀 ~ file: Nav.tsx:32 ~ passageSignOut ~ data", data);
+    if (data.success) {
+      setUserInfo(emptyUser);
+      router.refresh();
+    }
+  };
 
   useEffect(() => {
     const getUserProfileInfo = async () => {
@@ -41,9 +49,9 @@ function Nav() {
     getUserProfileInfo();
   }, []);
 
-  const handleSignOut = async () => {
-    await signOut();
-  };
+  // const handleSignOut = async () => {
+  //   await signOut();
+  // };
 
   return !loading ? (
     <motion.nav
@@ -73,14 +81,26 @@ function Nav() {
         {(session?.user && status === "authenticated") ||
         userInfo.isAuthorized ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/create-prompt" className="black_btn">
+            <Link href="/create-prompt" className="purple_gradient_btn">
               Create Post
             </Link>
 
             <button
               type="button"
               className="outline_btn"
-              onClick={handleSignOut}
+              onClick={() => {
+                setToggleDropdown(false);
+                if (session?.user) {
+                  signOut();
+                }
+                if (userInfo.isAuthorized) {
+                  console.log(
+                    "🚀 ~ file: Nav.tsx:165 ~ Nav ~ userInfo.isAuthorized:",
+                    userInfo.isAuthorized
+                  );
+                  passageSignOut();
+                }
+              }}
             >
               Sign Out
             </button>
@@ -104,7 +124,7 @@ function Nav() {
         status === "unauthenticated" &&
         !userInfo.isAuthorized ? (
           <Link href="/auth/signIn">
-            <button type="button" className="black_btn">
+            <button type="button" className="outline_btn">
               Sign In
             </button>
           </Link>
@@ -147,9 +167,18 @@ function Nav() {
                   type="button"
                   onClick={() => {
                     setToggleDropdown(false);
-                    signOut();
+                    if (session?.user) {
+                      signOut();
+                    }
+                    if (userInfo.isAuthorized) {
+                      console.log(
+                        "🚀 ~ file: Nav.tsx:165 ~ Nav ~ userInfo.isAuthorized:",
+                        userInfo.isAuthorized
+                      );
+                      passageSignOut();
+                    }
                   }}
-                  className="mt-5 w-full black_btn"
+                  className="mt-5 w-full outline_btn"
                 >
                   Sign Out
                 </button>
@@ -159,7 +188,7 @@ function Nav() {
         ) : (
           <div className="flex gap-3 md:gap-5">
             <Link href="/auth/signIn">
-              <button type="button" className="black_btn">
+              <button type="button" className="outline_btn">
                 Sign In
               </button>
             </Link>

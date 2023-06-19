@@ -80,7 +80,7 @@ function Feed() {
         onAnimationComplete={() => setDisplayPosts(true)}
       >
         <input
-          className="search_input peer"
+          className="search_input_dark peer"
           placeholder="Search for a tag or username"
           type="text"
           value={searchText}

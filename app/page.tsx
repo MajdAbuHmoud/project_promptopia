@@ -74,14 +74,14 @@ function Home() {
           variants={parentVariants(hasResized, isMedium)}
           initial={["hidden", "fontInitial"]}
           animate={["show", "fontFinal"]}
-          className="flex font-extrabold leading-[1.15] text-black flex-wrap justify-center space-x-3"
+          className="flex font-monaSans font-extrabold leading-[1.15] text-white flex-wrap justify-center space-x-3"
         >
           <motion.h1 variants={opacityVariants}>Discover</motion.h1>
           <motion.h1 variants={opacityVariants}>&</motion.h1>
           <motion.h1 variants={opacityVariants}>Share</motion.h1>
           <motion.span
             variants={opacityVariants}
-            className="w-full block mt-2 purple_gradient text-center"
+            className="w-full block mt-2 github-purple-gradient text-center"
           >
             AI-Powered Prompts
           </motion.span>
@@ -90,7 +90,7 @@ function Home() {
           variants={introTextVariants}
           initial="hidden"
           animate="show"
-          className="desc text-center"
+          className="desc text-center font-monaSans"
         >
           {introText.split("").map((char, index) => {
             return (

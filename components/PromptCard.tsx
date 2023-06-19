@@ -52,8 +52,10 @@ function PromptCard({
             onClick={handleProfileClick}
           />
           <div className="flex flex-col">
-            <h3 onClick={handleProfileClick}>{post.creator.username}</h3>
-            <p className="text-sm text-gray-500" onClick={handleProfileClick}>
+            <h3 className="text-white" onClick={handleProfileClick}>
+              {post.creator.username}
+            </h3>
+            <p className="text-sm text-white/50" onClick={handleProfileClick}>
               {post.creator.email}
             </p>
           </div>
@@ -72,9 +74,9 @@ function PromptCard({
           />
         </div>
       </div>
-      <p className="font-statoshi text-sm text-grey-700 my-4">{post.prompt}</p>
+      <p className="font-monaSans text-sm text-white my-4">{post.prompt}</p>
       <p
-        className="font-inter purple_gradient text-sm cursor-pointer"
+        className="font-monaSans text-white text-sm font-bold cursor-pointer"
         onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
         #{post.tag}

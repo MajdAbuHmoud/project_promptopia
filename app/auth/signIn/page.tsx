@@ -59,13 +59,16 @@ export default function SignIn() {
   }, []);
 
   return isMounted && status === "unauthenticated" ? (
-    <motion.div>
+    <motion.div className="authContainer ">
+      {passageAuthEnvValues.appID ? (
+        <passage-auth app-id={passageAuthEnvValues.appID}></passage-auth>
+      ) : null}
       <div className="flex flex-col align-center gap-3 md:gap-5">
         {providers &&
           Object.values(providers).map((provider) => (
             <button
               type="button"
-              className="black_btn"
+              className="outline_btn"
               key={provider.name}
               onClick={() => signIn(provider.id)}
             >
@@ -73,9 +76,6 @@ export default function SignIn() {
             </button>
           ))}
       </div>
-      {passageAuthEnvValues.appID ? (
-        <passage-auth app-id={passageAuthEnvValues.appID}></passage-auth>
-      ) : null}
     </motion.div>
   ) : null;
 }
