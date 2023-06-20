@@ -2,14 +2,16 @@
 
 import Profile from "@components/Profile";
 import { SessionModified } from "@interfaces/interfaces";
+import { PassageUserType, PostWithCreatorType } from "@types";
+import { useUserProfileInfo } from "@utils/hooks/useUserProfileInfo";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 function MyProfile() {
   const router = useRouter();
+  const { userInfo } = useUserProfileInfo();
   const { data: session } = useSession();
-  console.log("🚀 ~ file: page.tsx:10 ~ MyProfile ~ session:", session);
   const [posts, setPosts] = useState<PostWithCreatorType[]>([]);
 
   const handleEdit = (post: PostWithCreatorType) => {
@@ -38,17 +40,25 @@ function MyProfile() {
   };
 
   useEffect(() => {
-    console.log("called");
     const getMyProfilePosts = async () => {
       const getMyProfilePostsData = await fetch(
-        `/api/users/${(session as SessionModified)?.user?.sessionId}/posts`
+        `/api/users/${
+          (session as SessionModified)?.user?.sessionId || userInfo._id
+        }/posts`
       );
-      const myProfilePostsData = await getMyProfilePostsData.json();
-
-      setPosts(myProfilePostsData);
+      let myProfilePostsData: PostWithCreatorType[] = [];
+      if (getMyProfilePostsData.ok) {
+        myProfilePostsData = await getMyProfilePostsData.json();
+        setPosts(myProfilePostsData);
+      }
     };
-    if ((session as SessionModified)?.user?.sessionId) getMyProfilePosts();
-  }, [session]);
+    if (
+      (session as SessionModified)?.user?.sessionId ||
+      userInfo.isAuthorized
+    ) {
+      getMyProfilePosts();
+    }
+  }, [session, userInfo]);
 
   return (
     <Profile

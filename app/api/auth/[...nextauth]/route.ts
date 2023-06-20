@@ -42,6 +42,8 @@ const handler = NextAuth({
           // Check if user exists
           const userExists = await User.findOne({ email: profile.email });
 
+          // Todo: Handle duplicate username
+
           if (!userExists) {
             // Create user
             await User.create({

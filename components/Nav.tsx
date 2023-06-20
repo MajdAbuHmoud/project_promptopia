@@ -11,19 +11,12 @@ import {
   opacityVariants,
 } from "@utils/framerMotion/variants";
 import { useRouter } from "next/navigation";
-
-const emptyUser = {
-  _id: "",
-  username: "",
-  email: "",
-  image: "",
-  isAuthorized: false,
-};
+import { emptyUser } from "@utils/defaultData/defaultData";
+import { useUserProfileInfo } from "@utils/hooks/useUserProfileInfo";
 
 function Nav() {
   const { data: session, status } = useSession();
-  const [userInfo, setUserInfo] = useState<PassageUserType>(emptyUser);
-  const [loading, setLoading] = useState(true);
+  const { userInfo, processed, clearUserInfo } = useUserProfileInfo();
   const router = useRouter();
 
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -33,27 +26,12 @@ function Nav() {
     const data = await signOutResponse.json();
     console.log("🚀 ~ file: Nav.tsx:32 ~ passageSignOut ~ data", data);
     if (data.success) {
-      setUserInfo(emptyUser);
+      clearUserInfo();
       router.refresh();
     }
   };
 
-  useEffect(() => {
-    const getUserProfileInfo = async () => {
-      const getUserProfileInfoResponse = await fetch("/api/auth/passageAuth");
-      const data = await getUserProfileInfoResponse.json();
-      console.log("🚀 ~ file: Nav.tsx:41 ~ getUserProfileInfo ~ data:", data);
-      setUserInfo(data);
-      setLoading(false);
-    };
-    getUserProfileInfo();
-  }, []);
-
-  // const handleSignOut = async () => {
-  //   await signOut();
-  // };
-
-  return !loading ? (
+  return processed ? (
     <motion.nav
       variants={navOpacityVariants}
       initial="hidden"

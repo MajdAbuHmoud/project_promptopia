@@ -4,7 +4,6 @@ import { connectToDB } from "@utils/database";
 import { cookies } from "next/dist/client/components/headers";
 
 export const GET = async (req: Request, res: Response) => {
-  console.log("called");
   const passage = new Passage({
     appID: process.env.PASSAGE_APP_ID!,
     apiKey: process.env.PASSAGE_API_KEY!,
@@ -14,14 +13,12 @@ export const GET = async (req: Request, res: Response) => {
   try {
     const cookieStore = cookies();
     const authToken = cookieStore.get("psg_auth_token");
-    console.log("🚀 ~ file: route.ts:19 ~ authToken:", authToken);
     const req = {
       headers: {
         authorization: `Bearer ${authToken?.value}`,
       },
     };
     const userID = await passage.authenticateRequest(req);
-    console.log("🚀 ~ file: route.ts:24 ~ GET ~ userID:", userID);
 
     if (userID) {
       const { email, phone, user_metadata } = await passage.user.get(userID);
@@ -32,12 +29,10 @@ export const GET = async (req: Request, res: Response) => {
       const { username } = user_metadata || ({} as any);
 
       const identifier = email ? email : phone;
-      console.log("🚀 ~ file: route.ts:33 ~ GET ~ identifier:", identifier);
 
       await connectToDB();
 
       const userExists = await User.findOne({ email: identifier });
-      console.log("🚀 ~ file: route.ts:34 ~ GET ~ userExists:", userExists);
 
       if (!userExists) {
         // Create user

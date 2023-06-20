@@ -46,8 +46,6 @@ const parentVariants = (hasResized: boolean, isMedium: boolean) => {
 };
 
 function Home() {
-  console.log("🚀 ~ file: page.tsx:49 ~ Home ~ Home:", Home);
-
   const hasResized = useResizeOnce();
   const [isMounted, setIsMounted] = useState(false);
   const isMedium = useMediaQuery("(min-width: 768px)");
@@ -61,9 +59,6 @@ function Home() {
 
   return isMounted ? (
     <section className="w-full h-full flex flex-col relative items-center">
-      {/* <div className="flex justify-center w-full">
-
-      </div> */}
       <motion.div
         variants={positionVariants}
         initial="initial"
