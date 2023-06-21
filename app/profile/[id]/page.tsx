@@ -1,6 +1,7 @@
 "use client";
 
 import Profile from "@components/Profile";
+import { PostWithCreatorType } from "@types";
 import { useSearchParams, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
