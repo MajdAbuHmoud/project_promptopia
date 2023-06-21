@@ -2,14 +2,14 @@
 
 import Form from "@components/Form";
 import { UserType } from "@types";
-import { useUserProfileInfo } from "@utils/hooks/useUserProfileInfo";
+import { useStore } from "@utils/store/store";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 function CreatePrompt() {
   const router = useRouter();
-  const { userInfo } = useUserProfileInfo();
+  const { userInfo } = useStore();
   console.log("🚀 ~ file: page.tsx:13 ~ CreatePrompt ~ userInfo:", userInfo);
   const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
@@ -26,7 +26,7 @@ function CreatePrompt() {
       let userId = "";
       if (session?.user) {
         userId = (session?.user as UserType).sessionId;
-      } else if (userInfo.isAuthorized) {
+      } else if (userInfo?.isAuthorized) {
         userId = userInfo._id;
       }
       const response = await fetch("/api/prompt/new", {

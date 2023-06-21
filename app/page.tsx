@@ -31,8 +31,6 @@ const positionVariants = {
 };
 
 const parentVariants = (hasResized: boolean, isMedium: boolean) => {
-  console.log("🚀 ~ file: page.tsx:25 ~ parentVariants ~ isMedium:", isMedium);
-
   return {
     ...parentOpacityVariants,
     fontInitial: isMedium ? { fontSize: "5rem" } : { fontSize: "3rem" },
@@ -49,12 +47,16 @@ const parentVariants = (hasResized: boolean, isMedium: boolean) => {
 
 function Home() {
   const hasResized = useResizeOnce();
-  const { userInfo } = useStore();
+  const { userInfo, getUserInfo } = useStore();
+  useEffect(() => {
+    if (!userInfo) {
+      console.log("🚀 ~ file: page.tsx:53 ~ useEffect ~ userInfo:", userInfo);
+      getUserInfo();
+    }
+  }, [getUserInfo, userInfo]);
 
   const [isMounted, setIsMounted] = useState(false);
   const isMedium = useMediaQuery("(min-width: 768px)");
-
-  console.log("🚀 ~ file: page.tsx:55 ~ Home ~ userInfo:", userInfo);
 
   const introText =
     "Promptopia is an open-source AI prompting tool for modern world to discover, create and share creative prompts";

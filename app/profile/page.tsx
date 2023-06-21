@@ -3,14 +3,15 @@
 import Profile from "@components/Profile";
 import { SessionModified } from "@interfaces/interfaces";
 import { PostWithCreatorType } from "@types";
-import { useUserProfileInfo } from "@utils/hooks/useUserProfileInfo";
+import { useStore } from "@utils/store/store";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 function MyProfile() {
   const router = useRouter();
-  const { userInfo } = useUserProfileInfo();
+  const { userInfo } = useStore();
+  console.log("🚀 ~ file: page.tsx:14 ~ MyProfile ~ userInfo:", userInfo);
   const { data: session } = useSession();
   const [posts, setPosts] = useState<PostWithCreatorType[]>([]);
 
@@ -43,7 +44,7 @@ function MyProfile() {
     const getMyProfilePosts = async () => {
       const getMyProfilePostsData = await fetch(
         `/api/users/${
-          (session as SessionModified)?.user?.sessionId || userInfo._id
+          (session as SessionModified)?.user?.sessionId || userInfo?._id
         }/posts`
       );
       let myProfilePostsData: PostWithCreatorType[] = [];
@@ -54,7 +55,7 @@ function MyProfile() {
     };
     if (
       (session as SessionModified)?.user?.sessionId ||
-      userInfo.isAuthorized
+      userInfo?.isAuthorized
     ) {
       getMyProfilePosts();
     }

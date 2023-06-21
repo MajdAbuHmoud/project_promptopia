@@ -19,17 +19,12 @@ export const GET = async (req: Request, res: Response) => {
         authorization: `Bearer ${authToken?.value}`,
       },
     };
-    console.log("🚀 ~ file: route.ts:22 ~ GET ~ req:", req);
 
     const userID = await passage.authenticateRequest(req);
-    console.log("🚀 ~ file: route.ts:23 ~ GET ~ userID:", userID);
 
     if (userID) {
       const { email, phone, user_metadata } = await passage.user.get(userID);
-      console.log(
-        "🚀 ~ file: route.ts:26 ~ GET ~ user_metadata:",
-        user_metadata
-      );
+
       const { username } = user_metadata || ({} as any);
 
       const identifier = email ? email : phone;
@@ -57,7 +52,6 @@ export const GET = async (req: Request, res: Response) => {
       return new Response(JSON.stringify(result), { status: 200 });
     }
   } catch (error: any) {
-    console.log("🚀 ~ file: route.ts:57 ~ GET ~ error:", error);
     return new Response(
       JSON.stringify({
         isAuthorized: false,

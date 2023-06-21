@@ -1,10 +1,11 @@
 "use client";
 
 import { PostWithCreatorType, UserType } from "@types";
+import { useStore } from "@utils/store/store";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type PromptCardProps = {
   post: PostWithCreatorType;
@@ -20,9 +21,11 @@ function PromptCard({
   handleDeleteClick,
 }: PromptCardProps) {
   const { data: session } = useSession();
+  const { userInfo } = useStore();
   const pathname = usePathname();
   const router = useRouter();
   const [copied, setCopied] = useState("");
+  const [userId, setUserId] = useState("");
 
   const handleCopy = () => {
     setCopied(post.prompt);
@@ -38,6 +41,14 @@ function PromptCard({
 
     router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
   };
+
+  useEffect(() => {
+    if ((session?.user as UserType)?.sessionId) {
+      setUserId((session?.user as UserType)?.sessionId);
+    } else if (userInfo?.isAuthorized) {
+      setUserId(userInfo?._id as string);
+    }
+  }, [userInfo, session]);
 
   return (
     <div className="prompt_card">
@@ -81,8 +92,7 @@ function PromptCard({
       >
         #{post.tag}
       </p>
-      {(session?.user as UserType)?.sessionId === post.creator._id &&
-      pathname === "/profile" ? (
+      {userId === post.creator._id && pathname === "/profile" ? (
         <div className="flex flex-center gap-4">
           <p
             className="text-sm cursor-pointer green_gradient"

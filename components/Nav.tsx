@@ -14,7 +14,7 @@ import { useStore } from "@utils/store/store";
 
 function Nav() {
   const { data: session, status } = useSession();
-  const userInfo = useStore((state) => state.userInfo);
+  const { userInfo, userInfoProcessed, clearUserInfo } = useStore();
   const router = useRouter();
 
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -22,13 +22,13 @@ function Nav() {
   const passageSignOut = async () => {
     const signOutResponse = await fetch("/api/auth/passageAuth/signOut");
     const data = await signOutResponse.json();
-    console.log("🚀 ~ file: Nav.tsx:32 ~ passageSignOut ~ data", data);
     if (data.success) {
+      clearUserInfo();
       router.refresh();
     }
   };
 
-  return (
+  return userInfoProcessed ? (
     <motion.nav
       variants={navOpacityVariants}
       initial="hidden"
@@ -171,7 +171,7 @@ function Nav() {
         )}
       </motion.div>
     </motion.nav>
-  );
+  ) : null;
 }
 
 export default Nav;
