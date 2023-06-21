@@ -1,5 +1,6 @@
 import { RequestParams } from "@interfaces/interfaces";
 import Prompt from "@models/prompt";
+import { PromptType } from "@types";
 import { connectToDB } from "@utils/database";
 
 // GET Prompt
