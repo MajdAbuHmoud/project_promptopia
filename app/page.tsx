@@ -11,6 +11,8 @@ import { useResizeOnce } from "@utils/hooks/useResizeOnce";
 import Feed from "@components/Feed";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useStore } from "@utils/store/store";
+import { StoreInitializer } from "@components/StoreInitializer";
 
 const positionVariants = {
   initial: {
@@ -47,8 +49,12 @@ const parentVariants = (hasResized: boolean, isMedium: boolean) => {
 
 function Home() {
   const hasResized = useResizeOnce();
+  const { userInfo } = useStore();
+
   const [isMounted, setIsMounted] = useState(false);
   const isMedium = useMediaQuery("(min-width: 768px)");
+
+  console.log("🚀 ~ file: page.tsx:55 ~ Home ~ userInfo:", userInfo);
 
   const introText =
     "Promptopia is an open-source AI prompting tool for modern world to discover, create and share creative prompts";
@@ -59,6 +65,7 @@ function Home() {
 
   return isMounted ? (
     <section className="w-full h-full flex flex-col relative items-center">
+      <StoreInitializer userInfo={userInfo} />
       <motion.div
         variants={positionVariants}
         initial="initial"

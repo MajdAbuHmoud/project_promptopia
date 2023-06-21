@@ -3,20 +3,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { PassageUserType } from "@types";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   navOpacityVariants,
   opacityVariants,
 } from "@utils/framerMotion/variants";
 import { useRouter } from "next/navigation";
-import { emptyUser } from "@utils/defaultData/defaultData";
-import { useUserProfileInfo } from "@utils/hooks/useUserProfileInfo";
+import { useStore } from "@utils/store/store";
 
 function Nav() {
   const { data: session, status } = useSession();
-  const { userInfo, processed, clearUserInfo } = useUserProfileInfo();
+  const userInfo = useStore((state) => state.userInfo);
   const router = useRouter();
 
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -26,12 +24,11 @@ function Nav() {
     const data = await signOutResponse.json();
     console.log("🚀 ~ file: Nav.tsx:32 ~ passageSignOut ~ data", data);
     if (data.success) {
-      clearUserInfo();
       router.refresh();
     }
   };
 
-  return processed ? (
+  return (
     <motion.nav
       variants={navOpacityVariants}
       initial="hidden"
@@ -57,7 +54,7 @@ function Nav() {
         className="sm:flex hidden"
       >
         {(session?.user && status === "authenticated") ||
-        userInfo.isAuthorized ? (
+        userInfo?.isAuthorized ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompt" className="purple_gradient_btn">
               Create Post
@@ -71,7 +68,7 @@ function Nav() {
                 if (session?.user) {
                   signOut();
                 }
-                if (userInfo.isAuthorized) {
+                if (userInfo?.isAuthorized) {
                   console.log(
                     "🚀 ~ file: Nav.tsx:165 ~ Nav ~ userInfo.isAuthorized:",
                     userInfo.isAuthorized
@@ -87,7 +84,7 @@ function Nav() {
               <Image
                 src={
                   session?.user?.image ||
-                  userInfo.image ||
+                  userInfo?.image ||
                   "/assets/images/logo.svg"
                 }
                 alt="Profile"
@@ -100,7 +97,7 @@ function Nav() {
         ) : null}
         {!session?.user &&
         status === "unauthenticated" &&
-        !userInfo.isAuthorized ? (
+        !userInfo?.isAuthorized ? (
           <Link href="/auth/signIn">
             <button type="button" className="outline_btn">
               Sign In
@@ -115,7 +112,7 @@ function Nav() {
         variants={opacityVariants}
         className="sm:hidden flex relative"
       >
-        {session?.user || userInfo.isAuthorized ? (
+        {session?.user || userInfo?.isAuthorized ? (
           <div className="flex">
             <Image
               src={session?.user?.image || "/assets/images/logo.svg"}
@@ -148,7 +145,7 @@ function Nav() {
                     if (session?.user) {
                       signOut();
                     }
-                    if (userInfo.isAuthorized) {
+                    if (userInfo?.isAuthorized) {
                       console.log(
                         "🚀 ~ file: Nav.tsx:165 ~ Nav ~ userInfo.isAuthorized:",
                         userInfo.isAuthorized
@@ -174,7 +171,7 @@ function Nav() {
         )}
       </motion.div>
     </motion.nav>
-  ) : null;
+  );
 }
 
 export default Nav;

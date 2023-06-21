@@ -4,6 +4,7 @@ import { connectToDB } from "@utils/database";
 import { cookies } from "next/dist/client/components/headers";
 
 export const GET = async (req: Request, res: Response) => {
+  console.log("called");
   const passage = new Passage({
     appID: process.env.PASSAGE_APP_ID!,
     apiKey: process.env.PASSAGE_API_KEY!,
@@ -18,7 +19,10 @@ export const GET = async (req: Request, res: Response) => {
         authorization: `Bearer ${authToken?.value}`,
       },
     };
+    console.log("🚀 ~ file: route.ts:22 ~ GET ~ req:", req);
+
     const userID = await passage.authenticateRequest(req);
+    console.log("🚀 ~ file: route.ts:23 ~ GET ~ userID:", userID);
 
     if (userID) {
       const { email, phone, user_metadata } = await passage.user.get(userID);
@@ -53,6 +57,7 @@ export const GET = async (req: Request, res: Response) => {
       return new Response(JSON.stringify(result), { status: 200 });
     }
   } catch (error: any) {
+    console.log("🚀 ~ file: route.ts:57 ~ GET ~ error:", error);
     return new Response(
       JSON.stringify({
         isAuthorized: false,

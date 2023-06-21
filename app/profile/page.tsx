@@ -2,7 +2,7 @@
 
 import Profile from "@components/Profile";
 import { SessionModified } from "@interfaces/interfaces";
-import { PassageUserType, PostWithCreatorType } from "@types";
+import { PostWithCreatorType } from "@types";
 import { useUserProfileInfo } from "@utils/hooks/useUserProfileInfo";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";

@@ -1,3 +1,4 @@
+import { Post } from "@types";
 import Link from "next/link";
 
 interface FormProps {
