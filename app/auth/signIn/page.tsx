@@ -1,7 +1,6 @@
 "use client";
 
 import { PassageAuthEnvValuesType } from "@types";
-import { data } from "autoprefixer";
 import { motion } from "framer-motion";
 import {
   ClientSafeProvider,
@@ -9,7 +8,6 @@ import {
   signIn,
   useSession,
 } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 

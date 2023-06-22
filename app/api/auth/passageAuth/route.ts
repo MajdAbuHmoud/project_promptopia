@@ -21,6 +21,7 @@ export const GET = async (req: Request, res: Response) => {
     };
 
     const userID = await passage.authenticateRequest(req);
+    console.log("🚀 ~ file: route.ts:24 ~ GET ~ userID:", userID);
 
     if (userID) {
       const { email, phone, user_metadata } = await passage.user.get(userID);

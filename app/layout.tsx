@@ -23,6 +23,7 @@ function RootLayout({ children, session }: LayoutProps) {
 
   useEffect(() => {
     if (!userInfo) {
+      console.log("🚀 ~ file: layout.tsx:26 ~ useEffect ~ userInfo:", userInfo);
       getUserInfo();
     }
   }, [userInfo, getUserInfo]);

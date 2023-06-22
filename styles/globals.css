@@ -228,6 +228,8 @@ passage-auth {
   --passage-primary-color: #d946ef;
   --passage-onprimary-color: #fff;
 
+  --passage-otp-input-background-color: #1c2128;
+
   --passage-container-background-color: #1c2128;
 }
 
