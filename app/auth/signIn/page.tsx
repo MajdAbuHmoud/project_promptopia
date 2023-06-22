@@ -1,7 +1,7 @@
 "use client";
 
 import { PassageAuthEnvValuesType } from "@types";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ClientSafeProvider,
   getProviders,
@@ -56,24 +56,28 @@ export default function SignIn() {
     // ) as PassageElement;
   }, []);
 
-  return isMounted && status === "unauthenticated" ? (
-    <motion.div className="authContainer ">
-      {passageAuthEnvValues.appID ? (
-        <passage-auth app-id={passageAuthEnvValues.appID}></passage-auth>
+  return (
+    <AnimatePresence>
+      {isMounted && status === "unauthenticated" ? (
+        <motion.div className="authContainer">
+          {passageAuthEnvValues.appID ? (
+            <passage-auth app-id={passageAuthEnvValues.appID}></passage-auth>
+          ) : null}
+          <div className="flex flex-col align-center gap-3 md:gap-5">
+            {providers &&
+              Object.values(providers).map((provider) => (
+                <button
+                  type="button"
+                  className="outline_btn"
+                  key={provider.name}
+                  onClick={() => signIn(provider.id)}
+                >
+                  Sign In with {provider.name}
+                </button>
+              ))}
+          </div>
+        </motion.div>
       ) : null}
-      <div className="flex flex-col align-center gap-3 md:gap-5">
-        {providers &&
-          Object.values(providers).map((provider) => (
-            <button
-              type="button"
-              className="outline_btn"
-              key={provider.name}
-              onClick={() => signIn(provider.id)}
-            >
-              Sign In with {provider.name}
-            </button>
-          ))}
-      </div>
-    </motion.div>
-  ) : null;
+    </AnimatePresence>
+  );
 }
