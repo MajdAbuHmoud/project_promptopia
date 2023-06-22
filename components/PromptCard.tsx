@@ -36,8 +36,7 @@ function PromptCard({
   };
 
   const handleProfileClick = () => {
-    if (post.creator._id === (session?.user as UserType)?.sessionId)
-      return router.push("/profile");
+    if (post.creator._id === userId) return router.push("/profile");
 
     router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
   };
@@ -46,6 +45,7 @@ function PromptCard({
     if ((session?.user as UserType)?.sessionId) {
       setUserId((session?.user as UserType)?.sessionId);
     } else if (userInfo?.isAuthorized) {
+      console.log("userInfo is valid", userInfo);
       setUserId(userInfo?._id as string);
     }
   }, [userInfo, session]);
@@ -85,9 +85,11 @@ function PromptCard({
           />
         </div>
       </div>
-      <p className="font-monaSans text-sm text-white my-4">{post.prompt}</p>
+      <p className="font-monaSans text-sm text-subtle-white my-4">
+        {post.prompt}
+      </p>
       <p
-        className="font-monaSans text-white text-sm font-bold cursor-pointer"
+        className="font-monaSans text-subtle-white text-sm font-bold cursor-pointer"
         onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
         #{post.tag}

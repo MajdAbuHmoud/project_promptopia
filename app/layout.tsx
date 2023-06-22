@@ -1,9 +1,12 @@
+"use client";
+
 import "@styles/globals.css";
 
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { Session } from "next-auth";
+import { useStore } from "@utils/store/store";
 
 export const metaData = {
   title: "Promptopia",
@@ -16,6 +19,14 @@ interface LayoutProps {
 }
 
 function RootLayout({ children, session }: LayoutProps) {
+  const { userInfo, getUserInfo, userInfoProcessed } = useStore();
+
+  useEffect(() => {
+    if (!userInfo) {
+      getUserInfo();
+    }
+  }, [userInfo, getUserInfo]);
+
   return (
     <html lang="en">
       <body>
@@ -24,8 +35,12 @@ function RootLayout({ children, session }: LayoutProps) {
             <div className="gradient" />
           </div>
           <main className="app">
-            <Nav />
-            {children}
+            {userInfoProcessed ? (
+              <>
+                <Nav />
+                {children}
+              </>
+            ) : null}
           </main>
         </Provider>
       </body>

@@ -27,7 +27,7 @@
   justify-content: center;
   padding: 120px 24px 160px 24px;
   pointer-events: none;
-  @apply bg-github-canvas-dark;
+  @apply bg-github-canvas-inset;
 }
 
 /* .main:before {
@@ -137,7 +137,7 @@
 }
 
 .search_input_dark {
-  @apply block w-full text-white rounded-md border border-github-light bg-github-canvas-subtle py-2.5 font-monaSans pl-5 pr-12 text-sm shadow-lg font-medium transition-all duration-300 focus:border-white outline-none focus:ring-0;
+  @apply block w-full text-subtle-white rounded-md border border-github-light bg-github-canvas-subtle py-2.5 font-monaSans pl-5 pr-12 text-sm shadow-lg font-medium transition-all duration-300 focus:border-white outline-none focus:ring-0;
 }
 
 .copy_btn {
@@ -162,8 +162,16 @@
   @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
 }
 
+.form_textarea_dark {
+  @apply w-full text-subtle-white rounded-lg bg-github-canvas-inset h-[200px] border border-github-light mt-2 p-3 text-sm transition-all duration-300 focus:border-white outline-none focus:ring-0;
+}
+
 .form_input {
   @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0;
+}
+
+.form_input_dark {
+  @apply w-full text-subtle-white  rounded-lg bg-github-canvas-inset border border-github-light mt-2 p-3 text-sm transition-all duration-300 focus:border-white outline-none focus:ring-0;
 }
 
 /* Nav Component */
@@ -182,6 +190,10 @@
 /* PromptCard Component */
 .prompt_card {
   @apply text-left flex-1 break-inside-avoid rounded-lg border border-github-light bg-github-canvas-subtle bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter lg:w-[360px] w-full h-full;
+}
+
+.theme_card {
+  @apply flex-1 break-inside-avoid rounded-lg border border-github-light bg-github-canvas-subtle bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter;
 }
 
 .flex-center {

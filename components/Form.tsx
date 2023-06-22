@@ -15,16 +15,16 @@ function Form({ type, post, setPost, submitting, handleSubmit }: FormProps) {
       <h1 className="head_text">
         <span className="purple_gradient">{type} Post</span>
       </h1>
-      <p className="mt-3">
+      <p className="mt-3 text-white">
         {type} and share your amazing prompts with the world!{" "}
         <span className="purple_gradient">Be creative!</span>
       </p>
       <form
-        className="mt-10 glassmorphism w-full flex flex-col gap-7"
+        className="mt-10 theme_card w-full flex flex-col gap-7"
         onSubmit={handleSubmit}
       >
         <label>
-          <span className="font-satoshi font-semibold text-base text-gray-700">
+          <span className="font-satoshi font-semibold text-base text-subtle-white">
             Your cool AI prompt
           </span>
         </label>
@@ -32,11 +32,11 @@ function Form({ type, post, setPost, submitting, handleSubmit }: FormProps) {
           placeholder="Write your prompt here..."
           value={post.prompt}
           required
-          className="form_textarea"
+          className="form_textarea_dark"
           onChange={(e) => setPost({ ...post, prompt: e.target.value })}
         />
         <label>
-          <span className="font-satoshi font-semibold text-base text-gray-700">
+          <span className="font-satoshi font-semibold text-base text-subtle-white">
             Tag {` `}
             <span className="font-normal">
               (#product, #webdevelopment, #NextJS)
@@ -47,11 +47,11 @@ function Form({ type, post, setPost, submitting, handleSubmit }: FormProps) {
           placeholder="#tag"
           value={post.tag}
           required
-          className="form_textarea"
+          className="form_textarea_dark"
           onChange={(e) => setPost({ ...post, tag: e.target.value })}
         />
         <div className="flex-end gap-4">
-          <Link href="/" className="text-grey-500 text-sm">
+          <Link href="/" className="text-subtle-white text-sm">
             Cancel
           </Link>
           <button

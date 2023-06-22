@@ -5,11 +5,11 @@ import { UserType } from "@types";
 import { useStore } from "@utils/store/store";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 function CreatePrompt() {
   const router = useRouter();
-  const { userInfo } = useStore();
+  const { userInfo, getUserInfo } = useStore();
   console.log("🚀 ~ file: page.tsx:13 ~ CreatePrompt ~ userInfo:", userInfo);
   const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
@@ -50,6 +50,12 @@ function CreatePrompt() {
       setSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (!userInfo) {
+      getUserInfo();
+    }
+  }, [getUserInfo, userInfo]);
 
   return (
     <Form

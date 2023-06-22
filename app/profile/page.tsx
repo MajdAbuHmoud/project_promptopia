@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 function MyProfile() {
   const router = useRouter();
   const { userInfo } = useStore();
-  console.log("🚀 ~ file: page.tsx:14 ~ MyProfile ~ userInfo:", userInfo);
   const { data: session } = useSession();
   const [posts, setPosts] = useState<PostWithCreatorType[]>([]);
 

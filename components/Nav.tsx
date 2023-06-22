@@ -14,7 +14,7 @@ import { useStore } from "@utils/store/store";
 
 function Nav() {
   const { data: session, status } = useSession();
-  const { userInfo, userInfoProcessed, clearUserInfo } = useStore();
+  const { userInfo, clearUserInfo } = useStore();
   const router = useRouter();
 
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -28,7 +28,7 @@ function Nav() {
     }
   };
 
-  return userInfoProcessed ? (
+  return (
     <motion.nav
       variants={navOpacityVariants}
       initial="hidden"
@@ -171,7 +171,7 @@ function Nav() {
         )}
       </motion.div>
     </motion.nav>
-  ) : null;
+  );
 }
 
 export default Nav;

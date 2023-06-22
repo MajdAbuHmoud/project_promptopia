@@ -11,8 +11,6 @@ import { useResizeOnce } from "@utils/hooks/useResizeOnce";
 import Feed from "@components/Feed";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useStore } from "@utils/store/store";
-import { StoreInitializer } from "@components/StoreInitializer";
 
 const positionVariants = {
   initial: {
@@ -47,14 +45,6 @@ const parentVariants = (hasResized: boolean, isMedium: boolean) => {
 
 function Home() {
   const hasResized = useResizeOnce();
-  const { userInfo, getUserInfo } = useStore();
-  useEffect(() => {
-    if (!userInfo) {
-      console.log("🚀 ~ file: page.tsx:53 ~ useEffect ~ userInfo:", userInfo);
-      getUserInfo();
-    }
-  }, [getUserInfo, userInfo]);
-
   const [isMounted, setIsMounted] = useState(false);
   const isMedium = useMediaQuery("(min-width: 768px)");
 
@@ -67,7 +57,6 @@ function Home() {
 
   return isMounted ? (
     <section className="w-full h-full flex flex-col relative items-center">
-      <StoreInitializer userInfo={userInfo} />
       <motion.div
         variants={positionVariants}
         initial="initial"
