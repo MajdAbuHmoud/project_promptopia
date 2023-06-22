@@ -216,9 +216,9 @@
 passage-auth {
   --passage-header-font-family: "Mona Sans", sans-serif;
   --passage-body-font-family: "Mona Sans", sans-serif;
-  --passage-body-text-color: #fff;
+  --passage-body-text-color: #adbac7;
 
-  --passage-header-text-color: #fff;
+  --passage-header-text-color: #adbac7;
 
   --passage-button-font-size: 0.875rem;
   --passage-button-font-weight: 400;
@@ -228,7 +228,7 @@ passage-auth {
   --passage-primary-color: #d946ef;
   --passage-onprimary-color: #fff;
 
-  --passage-container-background-color: #000;
+  --passage-container-background-color: #1c2128;
 }
 
 .authContainer {
