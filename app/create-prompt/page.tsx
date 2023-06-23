@@ -10,7 +10,6 @@ import { FormEvent, useEffect, useState } from "react";
 function CreatePrompt() {
   const router = useRouter();
   const { userInfo, getUserInfo } = useStore();
-  console.log("🚀 ~ file: page.tsx:13 ~ CreatePrompt ~ userInfo:", userInfo);
   const { data: session } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({

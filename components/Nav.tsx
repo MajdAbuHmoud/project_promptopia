@@ -3,20 +3,21 @@
 import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   navOpacityVariants,
   opacityVariants,
 } from "@utils/framerMotion/variants";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useStore } from "@utils/store/store";
 
 function Nav() {
   const { data: session, status } = useSession();
   const { userInfo, clearUserInfo } = useStore();
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
-
+  const pathname = usePathname();
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   const passageSignOut = async () => {
@@ -28,7 +29,14 @@ function Nav() {
     }
   };
 
-  return (
+  useEffect(() => {
+    setIsMounted(true);
+    if (pathname !== "/") {
+      navOpacityVariants.show.transition.delayChildren = 0;
+    }
+  }, [pathname]);
+
+  return isMounted ? (
     <motion.nav
       variants={navOpacityVariants}
       initial="hidden"
@@ -69,10 +77,6 @@ function Nav() {
                   signOut();
                 }
                 if (userInfo?.isAuthorized) {
-                  console.log(
-                    "🚀 ~ file: Nav.tsx:165 ~ Nav ~ userInfo.isAuthorized:",
-                    userInfo.isAuthorized
-                  );
                   passageSignOut();
                 }
               }}
@@ -115,7 +119,7 @@ function Nav() {
         {session?.user || userInfo?.isAuthorized ? (
           <div className="flex">
             <Image
-              src={session?.user?.image || "/assets/images/logo.svg"}
+              src={session?.user?.image || (userInfo?.image as string)}
               alt="Profile"
               width={37}
               height={37}
@@ -123,17 +127,17 @@ function Nav() {
               onClick={() => setToggleDropdown((prev) => !prev)}
             />
             {toggleDropdown && (
-              <div className="dropdown">
+              <div className="dropdown_dark">
                 <Link
                   href="/profile"
-                  className="dropdown_link"
+                  className="dropdown_link_dark"
                   onClick={() => setToggleDropdown(false)}
                 >
                   My Profile
                 </Link>
                 <Link
                   href="/create-prompt"
-                  className="dropdown_link"
+                  className="dropdown_link_dark"
                   onClick={() => setToggleDropdown(false)}
                 >
                   Create Prompt
@@ -146,10 +150,6 @@ function Nav() {
                       signOut();
                     }
                     if (userInfo?.isAuthorized) {
-                      console.log(
-                        "🚀 ~ file: Nav.tsx:165 ~ Nav ~ userInfo.isAuthorized:",
-                        userInfo.isAuthorized
-                      );
                       passageSignOut();
                     }
                   }}
@@ -171,7 +171,7 @@ function Nav() {
         )}
       </motion.div>
     </motion.nav>
-  );
+  ) : null;
 }
 
 export default Nav;

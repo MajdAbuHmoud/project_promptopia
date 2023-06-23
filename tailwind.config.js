@@ -17,6 +17,7 @@ module.exports = {
         "primary-orange": "#FF5722",
         "github-canvas-subtle": "#22272E",
         "subtle-white": "#adbac7",
+        muted: "#9CA3AF",
         "github-canvas-dark": "#0d1117",
         "github-light": "#30363d",
         "github-canvas-inset": "#1c2128",

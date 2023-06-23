@@ -14,7 +14,6 @@ const handler = NextAuth({
   ],
   callbacks: {
     async session({ session }) {
-      console.log("🚀 ~ file: route.ts:33 ~ session ~ session:", session);
       if (session.user) {
         const sessionUser = await User.findOne({ email: session.user.email });
 
@@ -26,8 +25,6 @@ const handler = NextAuth({
         } as UserType;
 
         session.user = user;
-      } else {
-        console.log("🚀 ~ file: route.ts:31 ~ session ~ session error");
       }
 
       return session;

@@ -4,7 +4,6 @@ import { connectToDB } from "@utils/database";
 import { cookies } from "next/dist/client/components/headers";
 
 export const GET = async (req: Request, res: Response) => {
-  console.log("called");
   const passage = new Passage({
     appID: process.env.PASSAGE_APP_ID!,
     apiKey: process.env.PASSAGE_API_KEY!,
@@ -21,7 +20,6 @@ export const GET = async (req: Request, res: Response) => {
     };
 
     const userID = await passage.authenticateRequest(req);
-    console.log("🚀 ~ file: route.ts:24 ~ GET ~ userID:", userID);
 
     if (userID) {
       const { email, phone, user_metadata } = await passage.user.get(userID);

@@ -8,7 +8,6 @@ export function useResizeOnce() {
   const handleResize = useCallback(() => {
     if (!hasResized) {
       // Do something on first resize
-      console.log("Window has been resized for the first time!");
       setHasResized(true);
     }
   }, [hasResized]);

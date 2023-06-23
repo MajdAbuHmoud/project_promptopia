@@ -7,10 +7,6 @@ interface StoreInitializerProps {
 }
 
 export function StoreInitializer({ userInfo }: StoreInitializerProps) {
-  console.log(
-    "🚀 ~ file: StoreInitializer.tsx:10 ~ StoreInitializer ~ userInfo:",
-    userInfo
-  );
   const initialized = useRef(false);
   if (!initialized.current) {
     useStore.setState({ userInfo });

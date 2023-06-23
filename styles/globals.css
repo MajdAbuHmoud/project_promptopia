@@ -180,11 +180,19 @@
 }
 
 .dropdown {
-  @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end;
+  @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end z-[2];
+}
+
+.dropdown_dark {
+  @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-github-canvas-subtle min-w-[210px] flex flex-col gap-2 justify-end items-end z-[2];
 }
 
 .dropdown_link {
   @apply text-sm font-monaSans text-gray-700 hover:text-gray-500 font-medium;
+}
+
+.dropdown_link_dark {
+  @apply text-sm font-monaSans text-subtle-white hover:text-muted font-medium;
 }
 
 /* PromptCard Component */
@@ -226,13 +234,16 @@ passage-auth {
   --passage-control-border-color: #30363d;
   --passage-button-border-radius: 9999px;
   --passage-primary-color: #d946ef;
-  --passage-onprimary-color: #fff;
 
   --passage-otp-input-background-color: #1c2128;
 
   --passage-container-background-color: #1c2128;
 }
 
+passage-auth::part(input) {
+  @apply text-subtle-white placeholder-muted;
+}
+
 .authContainer {
-  @apply text-left break-inside-avoid rounded-lg border border-github-light bg-github-canvas-subtle bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter lg:w-[360px] w-full;
+  @apply text-left break-inside-avoid rounded-lg border border-github-light bg-github-canvas-subtle bg-clip-padding p-6 backdrop-blur-lg backdrop-filter lg:w-[360px] w-full min-h-[500px];
 }

@@ -1,8 +1,6 @@
 import { cookies } from "next/dist/client/components/headers";
 
 export const GET = async () => {
-  console.log("sign out called");
-
   try {
     const cookieStore = cookies();
     cookieStore.delete("psg_auth_token");

@@ -45,7 +45,6 @@ function PromptCard({
     if ((session?.user as UserType)?.sessionId) {
       setUserId((session?.user as UserType)?.sessionId);
     } else if (userInfo?.isAuthorized) {
-      console.log("userInfo is valid", userInfo);
       setUserId(userInfo?._id as string);
     }
   }, [userInfo, session]);

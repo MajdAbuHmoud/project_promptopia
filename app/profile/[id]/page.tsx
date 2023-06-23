@@ -17,7 +17,6 @@ function UserProfile() {
   const [posts, setPosts] = useState<PostWithCreatorType[]>([]);
 
   useEffect(() => {
-    console.log("called");
     const getMyProfilePosts = async () => {
       const getMyProfilePostsData = await fetch(`/api/users/${id}/posts`);
       const myProfilePostsData = await getMyProfilePostsData.json();

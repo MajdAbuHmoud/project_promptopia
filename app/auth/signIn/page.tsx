@@ -1,6 +1,10 @@
 "use client";
 
 import { PassageAuthEnvValuesType } from "@types";
+import {
+  opacityVariants,
+  parentOpacityVariants,
+} from "@utils/framerMotion/variants";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ClientSafeProvider,
@@ -19,10 +23,6 @@ export default function SignIn() {
     string,
     ClientSafeProvider
   > | null>(null);
-  console.log(
-    "🚀 ~ file: page.tsx:8 ~ SignIn ~ passageAuthEnvValues:",
-    passageAuthEnvValues
-  );
 
   const router = useRouter();
 
@@ -41,7 +41,6 @@ export default function SignIn() {
     const fetechEnvValues = async () => {
       const response = await fetch("/api/auth/passageAuth/envValues");
       const data = await response.json();
-      console.log("🚀 ~ file: page.tsx:17 ~ fetechEnvValues ~ data", data);
       setPassageAuthEnvValues(data);
     };
     const setProvidersData = async () => {
@@ -58,12 +57,24 @@ export default function SignIn() {
 
   return (
     <AnimatePresence>
-      {isMounted && status === "unauthenticated" ? (
-        <motion.div className="authContainer">
-          {passageAuthEnvValues.appID ? (
+      {isMounted &&
+      passageAuthEnvValues.appID &&
+      status === "unauthenticated" ? (
+        <motion.div
+          key="signIn"
+          variants={parentOpacityVariants}
+          initial="hidden"
+          animate="show"
+          className="authContainer"
+        >
+          <motion.div key="passageAuthSection" variants={opacityVariants}>
             <passage-auth app-id={passageAuthEnvValues.appID}></passage-auth>
-          ) : null}
-          <div className="flex flex-col align-center gap-3 md:gap-5">
+          </motion.div>
+
+          <motion.div
+            variants={opacityVariants}
+            className="flex flex-col align-center gap-3 md:gap-5"
+          >
             {providers &&
               Object.values(providers).map((provider) => (
                 <button
@@ -75,7 +86,7 @@ export default function SignIn() {
                   Sign In with {provider.name}
                 </button>
               ))}
-          </div>
+          </motion.div>
         </motion.div>
       ) : null}
     </AnimatePresence>
