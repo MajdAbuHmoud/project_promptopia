@@ -5,6 +5,7 @@ import {
   opacityVariants,
   parentOpacityVariants,
 } from "@utils/framerMotion/variants";
+import { useStore } from "@utils/store/store";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ClientSafeProvider,
@@ -26,11 +27,12 @@ export default function SignIn() {
 
   const router = useRouter();
 
-  const { data: session, status } = useSession();
+  const { status } = useSession();
+  const { userInfo } = useStore();
 
   const [isMounted, setIsMounted] = useState(false);
 
-  if (status === "authenticated") {
+  if (status === "authenticated" || userInfo?.isAuthorized) {
     router.push("/");
   }
 
