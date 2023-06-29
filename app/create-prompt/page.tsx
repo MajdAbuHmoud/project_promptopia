@@ -10,12 +10,16 @@ import { FormEvent, useEffect, useState } from "react";
 function CreatePrompt() {
   const router = useRouter();
   const { userInfo, getUserInfo } = useStore();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
     prompt: "",
     tag: "",
   });
+
+  if (status === "unauthenticated" && !userInfo?.isAuthorized) {
+    router.push("/auth/signIn");
+  }
 
   const createPrompt = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,9 +58,9 @@ function CreatePrompt() {
     if (!userInfo) {
       getUserInfo();
     }
-  }, [getUserInfo, userInfo]);
+  }, [getUserInfo, userInfo, status, router]);
 
-  return (
+  return status === "authenticated" || userInfo?.isAuthorized ? (
     <Form
       type="Create"
       post={post}
@@ -64,7 +68,7 @@ function CreatePrompt() {
       submitting={submitting}
       handleSubmit={createPrompt}
     />
-  );
+  ) : null;
 }
 
 export default CreatePrompt;
