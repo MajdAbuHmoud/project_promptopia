@@ -7,9 +7,6 @@ import {
   parentOpacityVariants,
   postsVariants,
 } from "@utils/framerMotion/variants";
-import { useSession } from "next-auth/react";
-import { useStore } from "@utils/store/store";
-import { useRouter } from "next/navigation";
 
 type ProfileProps = {
   name: string;
@@ -28,15 +25,7 @@ function Profile({
   handleDeleteClick,
   handleTagClick,
 }: ProfileProps) {
-  const router = useRouter();
-  const { userInfo } = useStore();
-  const { data: session, status } = useSession();
-
-  if (status === "unauthenticated" && !userInfo?.isAuthorized) {
-    router.push("/auth/signIn");
-  }
-
-  return status === "authenticated" || userInfo?.isAuthorized ? (
+  return (
     <section className="w-full">
       <h1 className="head_text">
         <span className="purple_gradient">{name} Profile</span>
@@ -67,7 +56,7 @@ function Profile({
         ) : null}
       </AnimatePresence>
     </section>
-  ) : null;
+  );
 }
 
 export default Profile;

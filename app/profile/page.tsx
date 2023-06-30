@@ -11,8 +11,12 @@ import { useEffect, useState } from "react";
 function MyProfile() {
   const router = useRouter();
   const { userInfo } = useStore();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [posts, setPosts] = useState<PostWithCreatorType[]>([]);
+
+  if (status === "unauthenticated" && !userInfo?.isAuthorized) {
+    router.push("/auth/signIn");
+  }
 
   const handleEdit = (post: PostWithCreatorType) => {
     router.push(`/update-prompt?id=${post._id}`);
@@ -60,7 +64,7 @@ function MyProfile() {
     }
   }, [session, userInfo]);
 
-  return (
+  return status === "authenticated" || userInfo?.isAuthorized ? (
     <Profile
       name="My"
       desc="Welcome to your profile"
@@ -68,7 +72,7 @@ function MyProfile() {
       handleDeleteClick={handleDelete}
       handleEditClick={handleEdit}
     />
-  );
+  ) : null;
 }
 
 export default MyProfile;
