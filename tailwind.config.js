@@ -14,7 +14,7 @@ module.exports = {
         monaSans: ["Mona Sans", "sans-serif"],
       },
       colors: {
-        "primary-orange": "#FF5722",
+        danger: "#e5534b",
         "github-canvas-subtle": "#22272E",
         "subtle-white": "#adbac7",
         muted: "#9CA3AF",

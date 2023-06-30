@@ -100,6 +100,18 @@
   @apply rounded-full border border-white bg-transparent py-1.5 px-5 text-white transition-all hover:border-gray-300 hover:text-gray-300 text-center text-sm font-monaSans flex items-center justify-center;
 }
 
+.btn {
+  @apply rounded-full border py-1.5 px-5  transition-all text-sm font-monaSans flex items-center justify-center;
+}
+
+.btn-primary {
+  @apply border-[#cdd9e51a] bg-github-light  text-subtle-white hover:border-[#768390] hover:bg-[#444c56];
+}
+
+.btn-danger {
+  @apply border-[#cdd9e51a] bg-github-light text-danger hover:border-[#e5534b] hover:bg-[#c93c37] hover:text-[#cdd9e5];
+}
+
 .head_text {
   @apply text-5xl font-barlow font-extrabold leading-[1.15] text-white sm:text-6xl;
 }

@@ -95,18 +95,23 @@ function PromptCard({
       </p>
       {userId === post.creator._id && pathname === "/profile" ? (
         <div className="flex flex-center gap-4">
-          <p
-            className="text-sm cursor-pointer green_gradient"
+          <button
+            className="btn btn-primary"
+            type="button"
             onClick={() => handleEditClick && handleEditClick(post)}
           >
             Edit
-          </p>
-          <p
-            className="text-sm cursor-pointer orange_gradient"
+          </button>
+          {/* <p className="text-sm cursor-pointer green_gradient" onClick={}>
+            Edit
+          </p> */}
+          <button
+            className="btn btn-danger"
+            type="button"
             onClick={() => handleDeleteClick && handleDeleteClick(post)}
           >
             Delete
-          </p>
+          </button>
         </div>
       ) : null}
     </div>
