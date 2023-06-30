@@ -32,6 +32,9 @@ function CreatePrompt() {
       } else if (userInfo?.isAuthorized) {
         userId = userInfo._id;
       }
+
+      console.log("🚀 ~ file: page.tsx:30 ~ createPrompt ~ userId:", userId);
+
       const response = await fetch("/api/prompt/new", {
         method: "POST",
         headers: {
