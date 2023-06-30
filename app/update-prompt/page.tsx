@@ -11,7 +11,6 @@ function EditPrompt() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { userInfo } = useStore();
-  console.log("🚀 ~ file: page.tsx:14 ~ EditPrompt ~ userInfo:", userInfo);
   const { data: session, status } = useSession();
   const id = searchParams.get("id");
   const [submitting, setSubmitting] = useState(false);
@@ -30,7 +29,6 @@ function EditPrompt() {
       try {
         const response = await fetch(`/api/prompt/${id}`);
         const data = await response.json();
-        console.log("🚀 ~ file: page.tsx:32 ~ getPrompt ~ data:", data);
 
         let userId = "";
         if (session?.user) {
