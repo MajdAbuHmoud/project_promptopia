@@ -18,6 +18,8 @@ interface LayoutProps {
   session: Session | null;
 }
 
+export const dynamic = "force-dynamic";
+
 function RootLayout({ children, session }: LayoutProps) {
   const { userInfo, getUserInfo, userInfoProcessed } = useStore();
 
