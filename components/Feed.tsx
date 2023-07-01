@@ -57,10 +57,6 @@ function Feed() {
     const getPrompts = async () => {
       const getPromptsData = await fetch("/api/prompt");
       const promptsData = await getPromptsData.json();
-      console.log(
-        "🚀 ~ file: Feed.tsx:60 ~ getPrompts ~ promptsData:",
-        promptsData
-      );
       setPosts(promptsData);
     };
     getPrompts();
