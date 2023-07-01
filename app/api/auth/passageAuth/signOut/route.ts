@@ -19,7 +19,7 @@ export const GET = async () => {
       }),
       {
         status: 200,
-        statusText: "Failed to sign out",
+        statusText: error,
       }
     );
   }
