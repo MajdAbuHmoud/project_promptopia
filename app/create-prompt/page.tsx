@@ -10,6 +10,7 @@ import { FormEvent, useEffect, useState } from "react";
 function CreatePrompt() {
   const router = useRouter();
   const { userInfo, getUserInfo } = useStore();
+  console.log("🚀 ~ file: page.tsx:13 ~ CreatePrompt ~ userInfo:", userInfo);
   const { data: session, status } = useSession();
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
@@ -61,7 +62,7 @@ function CreatePrompt() {
     if (!userInfo) {
       getUserInfo();
     }
-  }, [getUserInfo, userInfo, status, router]);
+  }, [getUserInfo, userInfo]);
 
   return status === "authenticated" || userInfo?.isAuthorized ? (
     <Form
