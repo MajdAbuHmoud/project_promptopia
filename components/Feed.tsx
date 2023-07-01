@@ -44,6 +44,10 @@ function Feed() {
     setSearchTimeout(
       setTimeout(() => {
         const filterResult = filterPrompts(textToSearch);
+        console.log(
+          "🚀 ~ file: Feed.tsx:47 ~ setTimeout ~ filterResult:",
+          filterResult
+        );
         setSearchResults(filterResult);
       }, 500)
     );
