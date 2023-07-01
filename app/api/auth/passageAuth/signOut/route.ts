@@ -16,6 +16,7 @@ export const GET = async () => {
     return new Response(
       JSON.stringify({
         success: false,
+        error,
       }),
       {
         status: 200,
