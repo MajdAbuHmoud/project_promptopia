@@ -10,7 +10,7 @@ const connectToDB = async () => {
   }
 
   const connectOptions = {
-    dbName: "share_prompt",
+    dbName: process.env.MONGODB_Name,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   } as ConnectOptions;
