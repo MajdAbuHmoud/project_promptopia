@@ -1,6 +1,6 @@
 import { cookies } from "next/dist/client/components/headers";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export const GET = async () => {
   try {
