@@ -22,12 +22,7 @@ function Nav() {
 
   const passageSignOut = async () => {
     const signOutResponse = await fetch("/api/auth/passageAuth/signOut");
-    console.log(
-      "🚀 ~ file: Nav.tsx:26 ~ passageSignOut ~ signOutResponse.statusText:",
-      signOutResponse.statusText
-    );
     const data = await signOutResponse.json();
-    console.log("🚀 ~ file: Nav.tsx:26 ~ passageSignOut ~ data:", data);
     if (data.success) {
       clearUserInfo();
       router.refresh();

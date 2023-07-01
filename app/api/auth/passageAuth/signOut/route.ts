@@ -14,7 +14,6 @@ export const GET = async () => {
       { status: 200, statusText: "Successfully signed out" }
     );
   } catch (error: any) {
-    console.log("🚀 ~ file: route.ts:15 ~ GET ~ error:", error);
     return new Response(
       JSON.stringify({
         success: false,

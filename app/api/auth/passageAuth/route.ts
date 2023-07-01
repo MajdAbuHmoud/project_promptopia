@@ -32,6 +32,8 @@ export const GET = async (req: Request, res: Response) => {
 
       const userExists = await User.findOne({ email: identifier });
 
+      let user = null;
+
       if (!userExists) {
         // Create user
         await User.create({
@@ -39,16 +41,28 @@ export const GET = async (req: Request, res: Response) => {
           username: username?.replace(" ", "").toLowerCase(),
           image: "/assets/images/user-profile.png",
         });
+
+        // Get new user ID
+        const newUser = await User.findOne({ email: email });
+
+        user = {
+          _id: newUser._id,
+          isAuthorized: true,
+          email: newUser.email,
+          username: newUser.username?.replace(" ", "").toLowerCase(),
+          image: "/assets/images/user-profile.png",
+        };
+      } else {
+        user = {
+          _id: userExists._id,
+          isAuthorized: true,
+          email: email,
+          username: username?.replace(" ", "").toLowerCase(),
+          image: userExists.image || "/assets/images/user-profile.png",
+        };
       }
 
-      const result = {
-        _id: userExists?._id,
-        isAuthorized: true,
-        email: email,
-        username: username?.replace(" ", "").toLowerCase(),
-        image: userExists?.image || "/assets/images/user-profile.png",
-      };
-      return new Response(JSON.stringify(result), { status: 200 });
+      return new Response(JSON.stringify(user), { status: 200 });
     }
   } catch (error: any) {
     return new Response(
