@@ -15,7 +15,7 @@ function MyProfile() {
   const [posts, setPosts] = useState<PostWithCreatorType[]>([]);
 
   if (status === "unauthenticated" && !userInfo?.isAuthorized) {
-    router.push("/auth/signIn");
+    router.push("/");
   }
 
   const handleEdit = (post: PostWithCreatorType) => {
