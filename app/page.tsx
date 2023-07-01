@@ -43,8 +43,6 @@ const parentVariants = (hasResized: boolean, isMedium: boolean) => {
   };
 };
 
-export const dynamic = "force-dynamic";
-
 function Home() {
   const hasResized = useResizeOnce();
   const [isMounted, setIsMounted] = useState(false);
