@@ -29,8 +29,14 @@ function CreatePrompt() {
     try {
       let userId = "";
       if (session?.user) {
+        console.log("🚀 ~ file: page.tsx:30 ~ createPrompt ~ session", session);
         userId = (session?.user as UserType).sessionId;
       } else if (userInfo?.isAuthorized) {
+        console.log(
+          "🚀 ~ file: page.tsx:36 ~ createPrompt ~ userInfo._id:",
+          userInfo._id
+        );
+
         userId = userInfo._id;
       }
 
